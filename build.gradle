@@ -15,15 +15,14 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-group = 'com.netcracker.edu'
+group = 'com.netracker.edu'
 version = '0.0.1-SNAPSHOT'
-
 sourceCompatibility = 10
-targetCompatibility = 10
 
 repositories {
     mavenCentral()
 }
+
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')

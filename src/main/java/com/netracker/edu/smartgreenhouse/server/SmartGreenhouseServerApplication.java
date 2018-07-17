@@ -1,4 +1,4 @@
-package com.netcracker.edu.smartgreenhouse.server;
+package com.netracker.edu.smartgreenhouse.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

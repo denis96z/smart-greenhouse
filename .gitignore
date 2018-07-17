@@ -1,5 +1,6 @@
 .gradle
 /build/
+!gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -23,6 +24,3 @@
 /dist/
 /nbdist/
 /.nb-gradle/
-
-### Local Properties ###
-application-dev.properties

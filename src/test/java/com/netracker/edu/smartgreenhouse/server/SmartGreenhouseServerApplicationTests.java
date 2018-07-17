@@ -1,4 +1,4 @@
-package com.netcracker.edu.smartgreenhouse.server;
+package com.netracker.edu.smartgreenhouse.server;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
