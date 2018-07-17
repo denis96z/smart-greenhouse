@@ -1,4 +1,4 @@
-package com.netcracker.edu.smartgreenhouseservice;
+package com.netcracker.edu.smartgreenhouse.server;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SmartGreenhouseServiceApplicationTests {
+public class SmartGreenhouseServerApplicationTests {
     @Test
     public void contextLoads() {
     }
