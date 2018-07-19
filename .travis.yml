@@ -23,6 +23,7 @@ before_install:
 before_script:
   - psql -c "create user smart_greenhouse_user with password 'smart_greenhouse_password';" -U postgres
   - psql -c "create database smart_greenhouse_db;" -U postgres
+  - psql -c "grant all on database smart_greenhouse_db to smart_greenhouse_user;" -U postgres
 
 script:
   - ./gradlew build
