@@ -21,4 +21,5 @@ jdk:
   - openjdk10
 
 script:
-  - ./gradlew build
+  - chmod +x ./gradlew && ./gradlew build
+
