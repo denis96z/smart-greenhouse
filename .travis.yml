@@ -21,8 +21,8 @@ before_install:
   - chmod +x ./gradlew
 
 before_script:
-  - psql -c "create user 'user' with password 'password';" -U postgres
-  - psql -c "create database 'smart-greenhouse-db';" -U postgres
+  - psql -c "create user smart_greenhouse_user with password 'smart_greenhouse_password';" -U postgres
+  - psql -c "create database smart_greenhouse_db;" -U postgres
 
 script:
   - ./gradlew build
