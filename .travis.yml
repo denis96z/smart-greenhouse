@@ -21,5 +21,6 @@ jdk:
   - openjdk10
 
 script:
+  - chmod +x gradle/wrapper/gradle-wrapper.jar
   - chmod +x ./gradlew && ./gradlew build
 
