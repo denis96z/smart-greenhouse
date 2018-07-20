@@ -1,6 +1,7 @@
 package com.netracker.edu.smartgreenhouse.server.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class DeviceCommand {
@@ -12,6 +13,7 @@ public class DeviceCommand {
     private Device device;
 
     private String command;
+    private Date timestamp;
     private CommandState state;
 
     public Long getId() {
@@ -32,6 +34,14 @@ public class DeviceCommand {
 
     public void setCommand(String command) {
         this.command = command;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public CommandState getState() {
