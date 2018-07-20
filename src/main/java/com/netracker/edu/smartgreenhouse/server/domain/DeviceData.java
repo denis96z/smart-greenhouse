@@ -1,9 +1,6 @@
-package com.netracker.edu.smartgreenhouse.server.model;
+package com.netracker.edu.smartgreenhouse.server.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -12,7 +9,9 @@ public class DeviceData {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     private Device device;
+
     private Date timestamp;
     private Float value;
 

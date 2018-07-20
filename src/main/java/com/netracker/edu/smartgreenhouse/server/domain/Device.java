@@ -1,9 +1,6 @@
-package com.netracker.edu.smartgreenhouse.server.model;
+package com.netracker.edu.smartgreenhouse.server.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Device {
@@ -11,6 +8,7 @@ public class Device {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     private Greenhouse greenhouse;
 
     public Long getId() {

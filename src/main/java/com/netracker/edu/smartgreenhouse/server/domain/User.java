@@ -1,4 +1,4 @@
-package com.netracker.edu.smartgreenhouse.server.model;
+package com.netracker.edu.smartgreenhouse.server.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
