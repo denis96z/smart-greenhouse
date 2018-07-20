@@ -29,7 +29,7 @@ public class DeviceCommandController {
     }
 
     @PostMapping("/{deviceId}")
-    public void addDeviceCommand(@PathVariable Long deviceId) {
+    public void addDeviceCommand(@PathVariable Long deviceId, @RequestBody String body) {
         throw new RuntimeException();
     }
 }

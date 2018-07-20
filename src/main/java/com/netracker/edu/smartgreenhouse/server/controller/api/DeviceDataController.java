@@ -18,7 +18,7 @@ public class DeviceDataController {
     }
 
     @PostMapping("/{deviceId}")
-    public void addDeviceData(@PathVariable Long deviceId) {
+    public void addDeviceData(@PathVariable Long deviceId, @RequestBody String body) {
         throw new RuntimeException();
     }
 }
