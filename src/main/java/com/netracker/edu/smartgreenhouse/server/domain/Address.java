@@ -1,20 +1,33 @@
 package com.netracker.edu.smartgreenhouse.server.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
+@Table(name = "address")
 public class Address {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private UUID id;
 
+    @Column(name = "address_string")
     private String address;
 
-    public Long getId() {
+    public Address() {}
+
+    public Address(String address) {
+        this.address = address;
+    }
+
+    public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getAddress() {
