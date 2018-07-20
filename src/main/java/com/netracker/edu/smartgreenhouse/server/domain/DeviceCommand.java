@@ -1,5 +1,7 @@
 package com.netracker.edu.smartgreenhouse.server.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,7 +15,10 @@ public class DeviceCommand {
     private Device device;
 
     private String command;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy-hh:mm:ss")
     private Date timestamp;
+
     private CommandState state;
 
     public Long getId() {

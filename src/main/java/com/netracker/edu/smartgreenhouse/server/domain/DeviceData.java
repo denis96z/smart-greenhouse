@@ -1,5 +1,7 @@
 package com.netracker.edu.smartgreenhouse.server.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,6 +14,7 @@ public class DeviceData {
     @ManyToOne(fetch = FetchType.LAZY)
     private Device device;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy-hh:mm:ss")
     private Date timestamp;
     private Float value;
 
