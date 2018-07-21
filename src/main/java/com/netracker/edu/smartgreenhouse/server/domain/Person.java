@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class User {
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -13,9 +13,9 @@ public class User {
     private String lastName;
     private String username;
 
-    public User() {}
+    public Person() {}
 
-    public User(String firstName, String lastName, String username) {
+    public Person(String firstName, String lastName, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;

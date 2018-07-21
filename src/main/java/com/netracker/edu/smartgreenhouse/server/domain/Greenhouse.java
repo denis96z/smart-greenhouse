@@ -13,14 +13,14 @@ public class Greenhouse {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-    private User owner;
+    private Person owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Address address;
 
     public Greenhouse() {}
 
-    public Greenhouse(String aliasName, User owner, Address address) {
+    public Greenhouse(String aliasName, Person owner, Address address) {
         this.aliasName = aliasName;
         this.owner = owner;
         this.address = address;
@@ -42,11 +42,11 @@ public class Greenhouse {
         this.aliasName = aliasName;
     }
 
-    public User getOwner() {
+    public Person getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(Person owner) {
         this.owner = owner;
     }
 
