@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
+import static com.netracker.edu.smartgreenhouse.server.constant.Format.DATE_TIME_FORMAT;
+
 @Entity
 @Table(name = "device_data")
 public class DeviceData {
@@ -22,7 +24,7 @@ public class DeviceData {
     private Float value;
 
     @Column(name = "timestamp")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy-hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT)
     private Date timestamp;
 
     public DeviceData() {}
