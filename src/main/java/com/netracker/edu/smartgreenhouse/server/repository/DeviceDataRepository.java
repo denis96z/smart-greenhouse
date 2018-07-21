@@ -9,10 +9,5 @@ import java.util.Date;
 import java.util.UUID;
 
 public interface DeviceDataRepository extends CrudRepository<DeviceData, UUID> {
-    /*@Query("select d from DeviceData d where " +
-            "(d.deviceId = :deviceId) and " +
-            "(d.timestamp between :fromDate and :toDate)")
-    Iterable<DeviceData> findByDeviceIdAndDatesBetween(@Param("deviceId") UUID deviceId,
-                                                       @Param("fromDate") Date fromDate,
-                                                       @Param("toDate") Date to);*/
+    Iterable<DeviceData> findByDevice_IdAndTimestampBetweenOrderByTimestamp(UUID deviceId, Date fromDate, Date toDate);
 }
