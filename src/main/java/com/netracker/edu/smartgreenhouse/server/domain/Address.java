@@ -1,19 +1,14 @@
 package com.netracker.edu.smartgreenhouse.server.domain;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "address")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private UUID id;
 
-    @Column(name = "address_string")
     private String address;
 
     public Address() {}

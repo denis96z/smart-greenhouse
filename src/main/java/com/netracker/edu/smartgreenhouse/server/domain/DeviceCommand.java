@@ -6,26 +6,23 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
+import static com.netracker.edu.smartgreenhouse.server.constant.Format.DATE_TIME_FORMAT;
+
 @Entity
-@Table(name = "device_command")
 public class DeviceCommand {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "device_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Device device;
 
-    @Column(name = "command_string")
     private String command;
 
-    @Column(name = "timestamp")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy-hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT)
     private Date timestamp;
 
-    @Column(name = "state")
     private CommandState state;
 
     public DeviceCommand() {}

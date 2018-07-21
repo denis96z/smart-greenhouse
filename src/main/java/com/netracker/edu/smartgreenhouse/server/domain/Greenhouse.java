@@ -4,22 +4,18 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "greenhouse")
 public class Greenhouse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private UUID id;
 
-    @Column(name = "alias_name")
     private String aliasName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
+    @JoinColumn(nullable = false)
     private User owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
     private Address address;
 
     public Greenhouse() {}

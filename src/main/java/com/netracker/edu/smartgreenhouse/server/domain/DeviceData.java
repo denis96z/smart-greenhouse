@@ -9,21 +9,17 @@ import java.util.UUID;
 import static com.netracker.edu.smartgreenhouse.server.constant.Format.DATE_TIME_FORMAT;
 
 @Entity
-@Table(name = "device_data")
 public class DeviceData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "device_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Device device;
 
-    @Column(name = "value")
     private Float value;
 
-    @Column(name = "timestamp")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT)
     private Date timestamp;
 
