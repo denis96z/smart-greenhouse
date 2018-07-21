@@ -12,7 +12,7 @@ import static com.netracker.edu.smartgreenhouse.server.constant.Format.DATE_TIME
 @Table(name = "device_data")
 public class DeviceData {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 

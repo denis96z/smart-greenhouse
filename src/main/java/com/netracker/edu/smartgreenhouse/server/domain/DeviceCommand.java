@@ -10,7 +10,7 @@ import java.util.UUID;
 @Table(name = "device_command")
 public class DeviceCommand {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
