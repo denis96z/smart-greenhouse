@@ -3,5 +3,7 @@ package com.netracker.edu.smartgreenhouse.server.repository;
 import com.netracker.edu.smartgreenhouse.server.domain.Device;
 import org.springframework.data.repository.CrudRepository;
 
-public interface DeniceRepository extends CrudRepository<Device, Long> {
+import java.util.UUID;
+
+public interface DeviceRepository extends CrudRepository<Device, UUID> {
 }
