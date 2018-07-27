@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GreenhouseService {
-    List<Greenhouse> getGreenhouses(UUID userId);
+    List<Greenhouse> getGreenhouses(UUID ownerId);
 }

@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.UUID;
 
 public interface GreenhouseRepository extends CrudRepository<Greenhouse, UUID> {
+    Iterable<Greenhouse> findByOwner_Id(UUID ownerId);
 }
