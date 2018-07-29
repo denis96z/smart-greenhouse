@@ -36,7 +36,7 @@ public class DeviceDataController {
         service.addDeviceData(deviceId, deviceData);
     }
 
-    @ResponseStatus(value= HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public String handleNotFoundException(NotFoundException exception) {
         return exception.getMessage();
