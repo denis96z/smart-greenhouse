@@ -1,9 +1,11 @@
 package com.netracker.edu.smartgreenhouse.server.controller.api;
 
 import com.netracker.edu.smartgreenhouse.server.domain.DeviceCommand;
+import com.netracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netracker.edu.smartgreenhouse.server.service.DeviceCommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -49,7 +51,13 @@ public class DeviceCommandController {
     }
 
     @PostMapping("/{deviceId}")
-    public void addDeviceCommand(@PathVariable UUID deviceId, @RequestBody String body) {
-        throw new RuntimeException();
+    public void addDeviceCommand(@PathVariable UUID deviceId, @RequestBody DeviceCommand deviceCommand) {
+        service.addDeviceCommand(deviceId, deviceCommand);
+    }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public String handleNotFoundException(NotFoundException exception) {
+        return exception.getMessage();
     }
 }

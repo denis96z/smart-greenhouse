@@ -11,5 +11,5 @@ public interface DeviceCommandService {
     List<DeviceCommand> getNewDeviceCommands(UUID deviceId);
     List<DeviceCommand> getExecutedOkDeviceCommands(UUID deviceId, Date fromDate, Date toDate);
     List<DeviceCommand> getExecutedErrorDeviceCommands(UUID deviceId, Date fromDate, Date toDate);
-    void addDeviceCommand(UUID deviceId, DeviceCommand command);
+    void addDeviceCommand(UUID deviceId, DeviceCommand deviceCommand);
 }
