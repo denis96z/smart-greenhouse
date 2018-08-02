@@ -11,27 +11,19 @@
     <link rel="stylesheet" th:href="@{/css/layout.css}">
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" th:href="${(#mvc.url('IC#getIndexPage')).build()}">
-        <img th:src="@{/img/greenhouse.jpg}" class="d-inline-block align-top page-icon">
-        Smart Greenhouse
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Главная</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Мой профиль</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Контакты</a>
-            </li>
-        </ul>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <a class="navbar-brand" th:href="${(#mvc.url('IC#getIndexPage')).build()}">
+            <img th:src="@{/img/greenhouse.jpg}" class="d-inline-block align-top page-icon">
+            Smart Greenhouse
+        </a>
+        <div class="navbar-right main-menu">
+            <ul class="navbar-nav">
+                <li><a th:href="${(#mvc.url('IC#getIndexPage')).build()}">Главная</a></li>
+                <li><a href="#">Регистрация</a></li>
+                <li><a href="#">Вход</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 
