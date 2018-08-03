@@ -15,15 +15,11 @@ public class Greenhouse {
     @JoinColumn(nullable = false)
     private Person owner;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Address address;
-
     public Greenhouse() {}
 
-    public Greenhouse(String aliasName, Person owner, Address address) {
+    public Greenhouse(String aliasName, Person owner) {
         this.aliasName = aliasName;
         this.owner = owner;
-        this.address = address;
     }
 
     public UUID getId() {
@@ -48,13 +44,5 @@ public class Greenhouse {
 
     public void setOwner(Person owner) {
         this.owner = owner;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 }
