@@ -1,19 +1,27 @@
 buildscript {
     ext {
+        kotlinVersion = '1.2.60'
         springBootVersion = '2.0.3.RELEASE'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
 
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.2.60"
+}
+
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'kotlin'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
 
 group = 'com.netracker.edu'
 version = '0.0.1-SNAPSHOT'
@@ -26,6 +34,8 @@ repositories {
 }
 
 dependencies {
+    compile('org.jetbrains.kotlin:kotlin-stdlib')
+    compile('org.jetbrains.kotlin:kotlin-reflect')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
