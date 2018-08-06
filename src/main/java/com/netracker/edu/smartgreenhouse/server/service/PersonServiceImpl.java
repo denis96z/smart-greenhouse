@@ -41,6 +41,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void deletePersonInfo(@NotNull Long personId) {
-        personRepository.deleteById(personId);
+        var person = personRepository.findById(personId);
+        if (person.isPresent()) {
+            personRepository.delete(person.get());
+        } else {
+            throw new NotFoundException("Person not found");
+        }
     }
 }
