@@ -1,7 +1,9 @@
 package com.netracker.edu.smartgreenhouse.server.controller.api;
 
+import com.netracker.edu.smartgreenhouse.server.domain.CommandState;
 import com.netracker.edu.smartgreenhouse.server.domain.DeviceCommand;
 import com.netracker.edu.smartgreenhouse.server.exception.NotFoundException;
+import com.netracker.edu.smartgreenhouse.server.exception.NotImplementedException;
 import com.netracker.edu.smartgreenhouse.server.service.DeviceCommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,35 +26,36 @@ public class DeviceCommandController {
         this.service = service;
     }
 
-    @GetMapping("/{deviceId}/all")
-    public List<DeviceCommand> getDeviceCommands(@PathVariable UUID deviceId,
-            @RequestParam("fromDate") @DateTimeFormat(pattern = DATE_FORMAT) Date fromDate,
-            @RequestParam("toDate") @DateTimeFormat(pattern = DATE_FORMAT) Date toDate) {
-        return service.getDeviceCommands(deviceId, fromDate, toDate);
-    }
-
-    @GetMapping("/{deviceId}/new")
-    public List<DeviceCommand> getNewDeviceCommands(@PathVariable UUID deviceId) {
-        return service.getNewDeviceCommands(deviceId);
-    }
-
-    @GetMapping("/{deviceId}/executed/ok")
-    public List<DeviceCommand> getExecutedOkDeviceCommands(@PathVariable UUID deviceId,
-            @RequestParam("fromDate") @DateTimeFormat(pattern = DATE_FORMAT) Date fromDate,
-            @RequestParam("toDate") @DateTimeFormat(pattern = DATE_FORMAT) Date toDate) {
-        return service.getExecutedOkDeviceCommands(deviceId, fromDate, toDate);
-    }
-
-    @GetMapping("/{deviceId}/executed/error")
-    public List<DeviceCommand> getExecutedErrorDeviceCommands(@PathVariable UUID deviceId,
-            @RequestParam("fromDate") @DateTimeFormat(pattern = DATE_FORMAT) Date fromDate,
-            @RequestParam("toDate") @DateTimeFormat(pattern = DATE_FORMAT) Date toDate) {
-        return service.getExecutedErrorDeviceCommands(deviceId, fromDate, toDate);
-    }
-
     @PostMapping("/{deviceId}")
     public void addDeviceCommand(@PathVariable UUID deviceId, @RequestBody DeviceCommand deviceCommand) {
         service.addDeviceCommand(deviceId, deviceCommand);
+    }
+
+    @GetMapping("/{deviceId}")
+    public List<DeviceCommand> getDeviceCommands(@PathVariable UUID deviceId,
+            @RequestParam(name = "state", required = false) CommandState state,
+            @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) Date fromDate,
+            @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) Date toDate) {
+        if (state == null) {
+            return service.getDeviceCommands(deviceId, fromDate, toDate);
+        }
+
+        if (state == CommandState.NOT_EXECUTED) {
+            return service.getNewDeviceCommands(deviceId);
+        }
+
+        if (fromDate == null) fromDate = new Date();
+        if (toDate == null) toDate = new Date();
+
+        switch (state) {
+            case EXECUTED_OK:
+                return service.getExecutedOkDeviceCommands(deviceId, fromDate, toDate);
+
+            case EXECUTED_ERROR:
+                return service.getExecutedErrorDeviceCommands(deviceId, fromDate, toDate);
+        }
+
+        throw new NotImplementedException();
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)

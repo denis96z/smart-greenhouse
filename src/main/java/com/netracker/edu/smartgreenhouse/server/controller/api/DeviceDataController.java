@@ -24,16 +24,16 @@ public class DeviceDataController {
         this.service = service;
     }
 
-    @GetMapping("/{deviceId}")
-    public List<DeviceData> getDeviceData(@PathVariable UUID deviceId,
-            @RequestParam("fromDate") @DateTimeFormat(pattern = DATE_FORMAT) Date fromDate,
-            @RequestParam("toDate") @DateTimeFormat(pattern = DATE_FORMAT) Date toDate) {
-        return service.getDeviceData(deviceId, fromDate, toDate);
-    }
-
     @PostMapping("/{deviceId}")
     public void addDeviceData(@PathVariable UUID deviceId, @RequestBody DeviceData deviceData) {
         service.addDeviceData(deviceId, deviceData);
+    }
+
+    @GetMapping("/{deviceId}")
+    public List<DeviceData> getDeviceData(@PathVariable UUID deviceId,
+            @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) Date fromDate,
+            @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) Date toDate) {
+        return service.getDeviceData(deviceId, fromDate, toDate);
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
