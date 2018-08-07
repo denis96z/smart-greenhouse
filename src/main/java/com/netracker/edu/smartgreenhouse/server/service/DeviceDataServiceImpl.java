@@ -1,5 +1,6 @@
 package com.netracker.edu.smartgreenhouse.server.service;
 
+import com.netracker.edu.smartgreenhouse.server.domain.Device;
 import com.netracker.edu.smartgreenhouse.server.domain.DeviceData;
 import com.netracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netracker.edu.smartgreenhouse.server.repository.DeviceDataRepository;
@@ -25,20 +26,27 @@ public class DeviceDataServiceImpl implements DeviceDataService {
         this.deviceDataRepository = deviceDataRepository;
     }
 
-    @Override
-    public void addDeviceData(UUID deviceId, DeviceData deviceData) {
+    private Device getDeviceInfo(UUID deviceId) {
         var device = deviceRepository.findById(deviceId);
         if (device.isPresent()) {
-            deviceData.setDevice(device.get());
-            deviceData.setTimestamp(new Date());
-            deviceDataRepository.save(deviceData);
+            return device.get();
         } else {
             throw new NotFoundException("Device not found");
         }
     }
 
     @Override
+    public void addDeviceData(UUID deviceId, DeviceData deviceData) {
+        var device = getDeviceInfo(deviceId);
+        deviceData.setDevice(device);
+        deviceData.setTimestamp(new Date());
+        deviceDataRepository.save(deviceData);
+    }
+
+    @Override
     public List<DeviceData> getDeviceData(UUID deviceId, Date fromDate, Date toDate) {
+        getDeviceInfo(deviceId);
+
         var today = new Date();
         if (toDate == null) {
             toDate = today;

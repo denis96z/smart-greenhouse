@@ -1,6 +1,7 @@
 package com.netracker.edu.smartgreenhouse.server.service;
 
 import com.netracker.edu.smartgreenhouse.server.domain.CommandState;
+import com.netracker.edu.smartgreenhouse.server.domain.Device;
 import com.netracker.edu.smartgreenhouse.server.domain.DeviceCommand;
 import com.netracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netracker.edu.smartgreenhouse.server.repository.DeviceCommandRepository;
@@ -25,22 +26,29 @@ public class DeviceCommandServiceImpl implements DeviceCommandService {
         this.deviceCommandRepository = deviceCommandRepository;
     }
 
-    @Override
-    public void addDeviceCommand(UUID deviceId, DeviceCommand deviceCommand) {
+    private Device getDeviceInfo(UUID deviceId) {
         var device = deviceRepository.findById(deviceId);
         if (device.isPresent()) {
-            deviceCommand.setDevice(device.get());
-            deviceCommand.setTimestamp(new Date());
-            deviceCommand.setState(CommandState.NOT_EXECUTED);
-            deviceCommandRepository.save(deviceCommand);
+            return device.get();
         } else {
             throw new NotFoundException("Device not found");
         }
     }
 
     @Override
+    public void addDeviceCommand(UUID deviceId, DeviceCommand deviceCommand) {
+        var device = getDeviceInfo(deviceId);
+        deviceCommand.setDevice(device);
+        deviceCommand.setTimestamp(new Date());
+        deviceCommand.setState(CommandState.NOT_EXECUTED);
+        deviceCommandRepository.save(deviceCommand);
+    }
+
+    @Override
     public List<DeviceCommand> getDeviceCommands(UUID deviceId,
             CommandState commandState,Date fromDate, Date toDate) {
+        getDeviceInfo(deviceId);
+
         var list = new ArrayList<DeviceCommand>();
 
         if (commandState == CommandState.NOT_EXECUTED) {
