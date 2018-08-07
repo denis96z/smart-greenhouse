@@ -16,6 +16,8 @@ data class Person(
 
     var password: String? = null,
 
+    var role: String? = null,
+
     var firstName: String? = null,
     var lastName: String? = null
 )
