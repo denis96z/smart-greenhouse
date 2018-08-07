@@ -6,7 +6,6 @@ import com.netracker.edu.smartgreenhouse.server.domain.DeviceCommand;
 import com.netracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netracker.edu.smartgreenhouse.server.repository.DeviceCommandRepository;
 import com.netracker.edu.smartgreenhouse.server.repository.DeviceRepository;
-import javafx.scene.web.HTMLEditorSkin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
