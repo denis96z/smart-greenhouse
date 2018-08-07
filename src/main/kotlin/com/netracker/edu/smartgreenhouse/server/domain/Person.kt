@@ -8,10 +8,14 @@ data class Person(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long? = null,
 
+    @Column(unique = true)
     var username: String? = null,
+
+    @Column(unique = true)
+    var email: String? = null,
+
     var password: String? = null,
 
     var firstName: String? = null,
-    var lastName: String? = null,
-    var email: String? = null
+    var lastName: String? = null
 )
