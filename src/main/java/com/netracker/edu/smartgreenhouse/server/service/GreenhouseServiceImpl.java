@@ -53,9 +53,9 @@ public class GreenhouseServiceImpl implements GreenhouseService {
     }
 
     @Override
-    public List<Greenhouse> getGreenhousesByOwner(Long personId) {
+    public List<Greenhouse> getGreenhousesByOwner(Long ownerId) {
         var list = new ArrayList<Greenhouse>();
-        greenhouseRepository.findByOwner_Id(personId).forEach(list::add);
+        greenhouseRepository.findByOwner_Id(ownerId).forEach(list::add);
         return list;
     }
 }

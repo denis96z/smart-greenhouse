@@ -10,5 +10,5 @@ public interface GreenhouseService {
     Greenhouse getGreenhouseInfo(UUID greenhouseId);
     void editGreenhouseInfo(Greenhouse greenhouse);
     void deleteGreenhouseInfo(UUID greenhouseId);
-    List<Greenhouse> getGreenhousesByOwner(Long personId);
+    List<Greenhouse> getGreenhousesByOwner(Long ownerId);
 }
