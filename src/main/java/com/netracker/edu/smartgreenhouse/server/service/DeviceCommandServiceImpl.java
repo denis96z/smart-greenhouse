@@ -5,6 +5,7 @@ import com.netracker.edu.smartgreenhouse.server.domain.DeviceCommand;
 import com.netracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netracker.edu.smartgreenhouse.server.repository.DeviceCommandRepository;
 import com.netracker.edu.smartgreenhouse.server.repository.DeviceRepository;
+import javafx.scene.web.HTMLEditorSkin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,36 +26,6 @@ public class DeviceCommandServiceImpl implements DeviceCommandService {
     }
 
     @Override
-    public List<DeviceCommand> getDeviceCommands(UUID deviceId, Date fromDate, Date toDate) {
-        var list = new ArrayList<DeviceCommand>();
-        deviceCommandRepository.findByDevice_IdAndTimestampBetweenOrderByTimestamp(deviceId, fromDate, toDate).forEach(list::add);
-        return list;
-    }
-
-    @Override
-    public List<DeviceCommand> getNewDeviceCommands(UUID deviceId) {
-        var list = new ArrayList<DeviceCommand>();
-        deviceCommandRepository.findByDevice_IdAndStateOrderByTimestamp(deviceId, CommandState.NOT_EXECUTED).forEach(list::add);
-        return list;
-    }
-
-    @Override
-    public List<DeviceCommand> getExecutedOkDeviceCommands(UUID deviceId, Date fromDate, Date toDate) {
-        return getExecutedDeviceCommands(deviceId, CommandState.EXECUTED_OK, fromDate, toDate);
-    }
-
-    @Override
-    public List<DeviceCommand> getExecutedErrorDeviceCommands(UUID deviceId, Date fromDate, Date toDate) {
-        return getExecutedDeviceCommands(deviceId, CommandState.EXECUTED_ERROR, fromDate, toDate);
-    }
-
-    private List<DeviceCommand> getExecutedDeviceCommands(UUID deviceId, CommandState state, Date fromDate, Date toDate) {
-        var list = new ArrayList<DeviceCommand>();
-        deviceCommandRepository.findByDevice_IdAndStateAndTimestampBetweenOrderByTimestamp(deviceId, state, fromDate, toDate).forEach(list::add);
-        return list;
-    }
-
-    @Override
     public void addDeviceCommand(UUID deviceId, DeviceCommand deviceCommand) {
         var device = deviceRepository.findById(deviceId);
         if (device.isPresent()) {
@@ -65,5 +36,31 @@ public class DeviceCommandServiceImpl implements DeviceCommandService {
         } else {
             throw new NotFoundException("Device not found");
         }
+    }
+
+    @Override
+    public List<DeviceCommand> getDeviceCommands(UUID deviceId,
+            CommandState commandState,Date fromDate, Date toDate) {
+        var list = new ArrayList<DeviceCommand>();
+
+        if (commandState == CommandState.NOT_EXECUTED) {
+            deviceCommandRepository
+                    .findByDevice_IdAndStateOrderByTimestamp(deviceId, commandState)
+                    .forEach(list::add);
+        } else {
+            var today = new Date();
+            if (toDate == null) {
+                toDate = today;
+            }
+            if (fromDate == null) {
+                fromDate = toDate.compareTo(today) < 0 ? toDate : today;
+            }
+            deviceCommandRepository
+                    .findByDevice_IdAndStateAndTimestampBetweenOrderByTimestamp(
+                            deviceId, commandState, fromDate, toDate)
+                    .forEach(list::add);
+        }
+
+        return list;
     }
 }

@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.UUID;
 
 public interface DeviceCommandRepository extends CrudRepository<DeviceCommand, UUID> {
-    Iterable<DeviceCommand> findByDevice_IdAndTimestampBetweenOrderByTimestamp(UUID deviceId, Date fromDate, Date toDate);
-    Iterable<DeviceCommand> findByDevice_IdAndStateOrderByTimestamp(UUID deviceId, CommandState commandState);
-    Iterable<DeviceCommand> findByDevice_IdAndStateAndTimestampBetweenOrderByTimestamp(UUID deviceId, CommandState commandState, Date fromDate, Date toDate);
+    Iterable<DeviceCommand> findByDevice_IdAndStateOrderByTimestamp(UUID deviceId, CommandState state);
+    Iterable<DeviceCommand> findByDevice_IdAndStateAndTimestampBetweenOrderByTimestamp(UUID deviceId, CommandState state, Date fromDate, Date toDate);
 }

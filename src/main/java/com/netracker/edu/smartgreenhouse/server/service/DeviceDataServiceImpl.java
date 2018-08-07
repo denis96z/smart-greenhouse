@@ -26,13 +26,6 @@ public class DeviceDataServiceImpl implements DeviceDataService {
     }
 
     @Override
-    public List<DeviceData> getDeviceData(UUID deviceId, Date fromDate, Date toDate) {
-        var list = new ArrayList<DeviceData>();
-        deviceDataRepository.findByDevice_IdAndTimestampBetweenOrderByTimestamp(deviceId, fromDate, toDate).forEach(list::add);
-        return list;
-    }
-
-    @Override
     public void addDeviceData(UUID deviceId, DeviceData deviceData) {
         var device = deviceRepository.findById(deviceId);
         if (device.isPresent()) {
@@ -42,5 +35,20 @@ public class DeviceDataServiceImpl implements DeviceDataService {
         } else {
             throw new NotFoundException("Device not found");
         }
+    }
+
+    @Override
+    public List<DeviceData> getDeviceData(UUID deviceId, Date fromDate, Date toDate) {
+        var today = new Date();
+        if (toDate == null) {
+            toDate = today;
+        }
+        if (fromDate == null) {
+            fromDate = toDate.compareTo(today) < 0 ? toDate : today;
+        }
+
+        var list = new ArrayList<DeviceData>();
+        deviceDataRepository.findByDevice_IdAndTimestampBetweenOrderByTimestamp(deviceId, fromDate, toDate).forEach(list::add);
+        return list;
     }
 }

@@ -1,5 +1,6 @@
 package com.netracker.edu.smartgreenhouse.server.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -14,6 +15,7 @@ data class Person(
     @Column(unique = true)
     var email: String? = null,
 
+    @JsonIgnore
     var password: String? = null,
 
     var role: String? = null,

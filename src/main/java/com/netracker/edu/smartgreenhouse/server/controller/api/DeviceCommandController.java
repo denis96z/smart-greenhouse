@@ -3,7 +3,6 @@ package com.netracker.edu.smartgreenhouse.server.controller.api;
 import com.netracker.edu.smartgreenhouse.server.domain.CommandState;
 import com.netracker.edu.smartgreenhouse.server.domain.DeviceCommand;
 import com.netracker.edu.smartgreenhouse.server.exception.NotFoundException;
-import com.netracker.edu.smartgreenhouse.server.exception.NotImplementedException;
 import com.netracker.edu.smartgreenhouse.server.service.DeviceCommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,29 +32,10 @@ public class DeviceCommandController {
 
     @GetMapping("/{deviceId}")
     public List<DeviceCommand> getDeviceCommands(@PathVariable UUID deviceId,
-            @RequestParam(name = "state", required = false) CommandState state,
+            @RequestParam(name = "commandState", required = false) CommandState commandState,
             @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) Date fromDate,
             @RequestParam(name = "toDate", required = false) @DateTimeFormat(pattern = DATE_FORMAT) Date toDate) {
-        if (state == null) {
-            return service.getDeviceCommands(deviceId, fromDate, toDate);
-        }
-
-        if (state == CommandState.NOT_EXECUTED) {
-            return service.getNewDeviceCommands(deviceId);
-        }
-
-        if (fromDate == null) fromDate = new Date();
-        if (toDate == null) toDate = new Date();
-
-        switch (state) {
-            case EXECUTED_OK:
-                return service.getExecutedOkDeviceCommands(deviceId, fromDate, toDate);
-
-            case EXECUTED_ERROR:
-                return service.getExecutedErrorDeviceCommands(deviceId, fromDate, toDate);
-        }
-
-        throw new NotImplementedException();
+        return service.getDeviceCommands(deviceId, commandState, fromDate, toDate);
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
