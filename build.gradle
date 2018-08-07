@@ -1,11 +1,13 @@
 buildscript {
     ext {
         kotlinVersion = "1.2.60"
-        springBootVersion = "2.0.3.RELEASE"
+        springBootVersion = "2.0.4.RELEASE"
     }
+
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
