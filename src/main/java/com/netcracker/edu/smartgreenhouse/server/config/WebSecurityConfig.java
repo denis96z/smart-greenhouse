@@ -22,16 +22,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public WebSecurityConfig(AuthenticationEntryPoint authEntryPoint,
             @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
         this.authEntryPoint = authEntryPoint;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
-                .and().httpBasic().realmName("MY APP REALM")
+                .antMatchers("/", "/css/**", "/img/**", "/js/**").anonymous()
+                .antMatchers("/api/**").authenticated()
+                .and().formLogin()
+                .and().httpBasic()
                 .authenticationEntryPoint(authEntryPoint);
     }
 
