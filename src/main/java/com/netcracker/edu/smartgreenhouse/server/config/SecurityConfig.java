@@ -47,7 +47,7 @@ public class SecurityConfig {
             http
                     .authorizeRequests()
                     .antMatchers("/css/**", "/js/**", "/img/**")
-                    .anonymous();
+                    .permitAll();
         }
     }
 
