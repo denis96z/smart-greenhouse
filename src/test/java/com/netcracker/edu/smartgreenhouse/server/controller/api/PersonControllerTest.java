@@ -23,7 +23,7 @@ public class PersonControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private PersonService personService;
+    private PersonService mockService;
 
     @Test
     public void addPersonInfoReturnsOkOnCorrectData() throws Exception {
@@ -66,7 +66,7 @@ public class PersonControllerTest {
         var objMapper = new ObjectMapper();
         var strPerson = objMapper.writeValueAsString(person);
 
-        Mockito.when(personService.getPersonInfo(personId)).thenReturn(person);
+        Mockito.when(mockService.getPersonInfo(personId)).thenReturn(person);
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get("/api/persons/" + personId))
@@ -81,7 +81,7 @@ public class PersonControllerTest {
         var personId = Long.valueOf(1);
 
         var errMsg = "Person not found";
-        Mockito.when(personService.getPersonInfo(personId))
+        Mockito.when(mockService.getPersonInfo(personId))
                 .thenThrow(new NotFoundException(errMsg));
 
         mockMvc
