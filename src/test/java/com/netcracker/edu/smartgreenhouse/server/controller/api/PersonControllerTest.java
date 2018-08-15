@@ -2,6 +2,7 @@ package com.netcracker.edu.smartgreenhouse.server.controller.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netcracker.edu.smartgreenhouse.server.domain.Person;
+import com.netcracker.edu.smartgreenhouse.server.exception.AlreadyExistsException;
 import com.netcracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netcracker.edu.smartgreenhouse.server.service.PersonService;
 import org.junit.Test;
@@ -56,6 +57,28 @@ public class PersonControllerTest {
                         .status().isBadRequest())
                 .andExpect(MockMvcResultMatchers
                         .content().string(""));
+    }
+
+    @Test
+    public void addPersonInfoReturnsForbiddenOnExistingPerson() throws Exception {
+        var person = new Person();
+
+        var objMapper = new ObjectMapper();
+        var strPerson = objMapper.writeValueAsString(person);
+
+        var errMsg = "Person already exists";
+        Mockito.when(mockService.addPersonInfo(person))
+                .thenThrow(new AlreadyExistsException(errMsg));
+
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/api/persons/new")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(strPerson))
+                .andExpect(MockMvcResultMatchers
+                        .status().isForbidden())
+                .andExpect(MockMvcResultMatchers
+                        .content().string(errMsg));
     }
 
     @Test
