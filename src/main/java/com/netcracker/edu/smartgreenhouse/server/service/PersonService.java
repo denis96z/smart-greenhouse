@@ -5,7 +5,7 @@ import org.springframework.security.access.annotation.Secured;
 
 public interface PersonService {
     @Secured("ROLE_ADMIN")
-    void addPersonInfo(Person person);
+    Person addPersonInfo(Person person);
 
     @Secured("ROLE_USER")
     Person getPersonInfo(Long personId);
