@@ -1,6 +1,7 @@
 package com.netcracker.edu.smartgreenhouse.server.controller.api;
 
 import com.netcracker.edu.smartgreenhouse.server.domain.Person;
+import com.netcracker.edu.smartgreenhouse.server.exception.AlreadyExistsException;
 import com.netcracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netcracker.edu.smartgreenhouse.server.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,12 @@ public class PersonController {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public String handleNotFoundException(NotFoundException exception) {
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AlreadyExistsException.class)
+    public String handleAlreadyExistsException(AlreadyExistsException exception) {
         return exception.getMessage();
     }
 }

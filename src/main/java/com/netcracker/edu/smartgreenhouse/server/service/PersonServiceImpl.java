@@ -1,6 +1,7 @@
 package com.netcracker.edu.smartgreenhouse.server.service;
 
 import com.netcracker.edu.smartgreenhouse.server.domain.Person;
+import com.netcracker.edu.smartgreenhouse.server.exception.AlreadyExistsException;
 import com.netcracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netcracker.edu.smartgreenhouse.server.repository.PersonRepository;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +19,10 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person addPersonInfo(Person person) {
+        var existing = personRepository.findById(person.getId());
+        if (existing.isPresent()) {
+            throw new AlreadyExistsException("Person already exists");
+        }
         personRepository.save(person);
         return person;
     }
@@ -33,8 +38,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void editPersonInfo(Person person) {
-        var newPerson = personRepository.findById(person.getId());
-        if (newPerson.isPresent()) {
+        var existing = personRepository.findById(person.getId());
+        if (existing.isPresent()) {
             personRepository.save(person);
         }
         throw new NotFoundException("Person not found");
