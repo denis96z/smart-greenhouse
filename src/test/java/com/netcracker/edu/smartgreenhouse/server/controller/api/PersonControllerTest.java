@@ -115,4 +115,64 @@ public class PersonControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .content().string(errMsg));
     }
+
+    @Test
+    public void editPersonInfoReturnsOkOnExistingPersonAndCorrectData() throws Exception {
+        var person = new Person();
+        person.setId(1L);
+
+        var objMapper = new ObjectMapper();
+        var strPerson = objMapper.writeValueAsString(person);
+
+        Mockito.when(mockService.editPersonInfo(person)).thenReturn(person);
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/api/persons/" + person.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(strPerson))
+                .andExpect(MockMvcResultMatchers
+                        .status().isOk())
+                .andExpect(MockMvcResultMatchers
+                        .content().string(""));
+    }
+
+    @Test
+    public void editPersonInfoReturnsNotFoundOnNonExistingPerson() throws Exception {
+        var person = new Person();
+        person.setId(1L);
+
+        var objMapper = new ObjectMapper();
+        var strPerson = objMapper.writeValueAsString(person);
+
+        var errMsg = "Person not found";
+        Mockito.when(mockService.editPersonInfo(person))
+                .thenThrow(new NotFoundException(errMsg));
+
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/api/persons/" + person.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(strPerson))
+                .andExpect(MockMvcResultMatchers
+                        .status().isNotFound())
+                .andExpect(MockMvcResultMatchers
+                        .content().string(errMsg));
+    }
+
+    @Test
+    public void editPersonInfoReturnsBadRequestOnWrongData() throws Exception {
+        var person = new Person();
+        person.setId(1L);
+        var strNonPerson = "";
+
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/api/persons/" + person.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(strNonPerson))
+                .andExpect(MockMvcResultMatchers
+                        .status().isBadRequest())
+                .andExpect(MockMvcResultMatchers
+                        .content().string(""));
+    }
 }

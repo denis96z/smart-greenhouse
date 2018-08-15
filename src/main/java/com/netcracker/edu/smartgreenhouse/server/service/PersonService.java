@@ -11,8 +11,8 @@ public interface PersonService {
     Person getPersonInfo(Long personId);
 
     @Secured("ROLE_ADMIN")
-    void editPersonInfo(Person person);
+    Person editPersonInfo(Person person);
 
     @Secured("ROLE_ADMIN")
-    void deletePersonInfo(Long personId);
+    Person deletePersonInfo(Long personId);
 }
