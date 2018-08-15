@@ -175,4 +175,34 @@ public class PersonControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .content().string(""));
     }
+
+    @Test
+    public void deletePersonInfoReturnsOkOnExistingPerson() throws Exception {
+        var personId = Long.valueOf(1);
+
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .delete("/api/persons/" + personId))
+                .andExpect(MockMvcResultMatchers
+                        .status().isOk())
+                .andExpect(MockMvcResultMatchers
+                        .content().string(""));
+    }
+
+    @Test
+    public void deletePersonInfoReturnsNotFoundOnNonExistingPerson() throws Exception {
+        var personId = Long.valueOf(1);
+
+        var errMsg = "Person not found";
+        Mockito.when(mockService.deletePersonInfo(personId))
+                .thenThrow(new NotFoundException(errMsg));
+
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .delete("/api/persons/" + personId))
+                .andExpect(MockMvcResultMatchers
+                        .status().isNotFound())
+                .andExpect(MockMvcResultMatchers
+                        .content().string(errMsg));
+    }
 }
