@@ -1,18 +1,19 @@
 package com.netcracker.edu.smartgreenhouse.server.service;
 
 import com.netcracker.edu.smartgreenhouse.server.domain.Person;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.access.annotation.Secured;
 
 public interface PersonService {
     @Secured("ROLE_ADMIN")
-    Person addPersonInfo(Person person);
+    Person addPersonInfo(@NotNull Person person);
 
     @Secured("ROLE_USER")
-    Person getPersonInfo(Long personId);
+    Person getPersonInfo(@NotNull Long personId);
 
     @Secured("ROLE_ADMIN")
-    Person editPersonInfo(Person person);
+    Person editPersonInfo(@NotNull Person person);
 
     @Secured("ROLE_ADMIN")
-    Person deletePersonInfo(Long personId);
+    Person deletePersonInfo(@NotNull Long personId);
 }

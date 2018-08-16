@@ -18,7 +18,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person addPersonInfo(Person person) {
+    public Person addPersonInfo(@NotNull Person person) {
         var existing = personRepository.findById(person.getId());
         if (existing.isPresent()) {
             throw new AlreadyExistsException("Person already exists");
@@ -36,7 +36,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person editPersonInfo(Person person) {
+    public Person editPersonInfo(@NotNull Person person) {
         var existing = personRepository.findById(person.getId());
         if (existing.isPresent()) {
             personRepository.save(person);
