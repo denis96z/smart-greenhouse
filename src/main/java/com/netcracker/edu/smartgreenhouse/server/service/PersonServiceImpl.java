@@ -23,8 +23,7 @@ public class PersonServiceImpl implements PersonService {
         if (existing.isPresent()) {
             throw new AlreadyExistsException("Person already exists");
         }
-        personRepository.save(person);
-        return person;
+        return personRepository.save(person);
     }
 
     @Override
