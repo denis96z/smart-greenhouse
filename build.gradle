@@ -48,7 +48,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     runtime("org.springframework.boot:spring-boot-devtools")
     runtime("org.postgresql:postgresql")
+    testCompile("javax.xml.bind:jaxb-api")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
-    testRuntime("com.h2database:h2")
 }
