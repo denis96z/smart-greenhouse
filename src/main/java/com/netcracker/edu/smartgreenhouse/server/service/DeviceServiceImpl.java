@@ -1,14 +1,14 @@
 package com.netcracker.edu.smartgreenhouse.server.service;
 
 import com.netcracker.edu.smartgreenhouse.server.domain.Device;
+import com.netcracker.edu.smartgreenhouse.server.exception.DataFormatException;
 import com.netcracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netcracker.edu.smartgreenhouse.server.repository.DeviceRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class DeviceServiceImpl implements DeviceService {
@@ -20,42 +20,47 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public void addDeviceInfo(Device device) {
-        deviceRepository.save(device);
-    }
-
-    @Override
-    public Device getDeviceInfo(UUID deviceId) {
-        var device = deviceRepository.findById(deviceId);
-        if (device.isPresent()) {
-            return device.get();
+    public Device addDeviceInfo(@NotNull Device device) {
+        if (device.getId() != null) {
+            throw new DataFormatException("ID is expected to be null");
         }
-        throw new NotFoundException("Device not found");
+        return deviceRepository.save(device);
     }
 
     @Override
-    public void editDeviceInfo(Device device) {
-        var newDevice = deviceRepository.findById(device.getId());
-        if (newDevice.isPresent()) {
-            deviceRepository.save(device);
-        }
-        throw new NotFoundException("Device not found");
+    public Device getDeviceInfo(@NotNull UUID deviceId) {
+        return tryFindDevice(deviceId);
     }
 
     @Override
-    public void deleteDeviceInfo(UUID deviceId) {
-        var device = deviceRepository.findById(deviceId);
-        if (device.isPresent()) {
-            deviceRepository.delete(device.get());
-        } else {
-            throw new NotFoundException("Device not found");
-        }
+    public Device editDeviceInfo(@NotNull Device device) {
+        tryFindDevice(getDeviceId(device));
+        return deviceRepository.save(device);
     }
 
     @Override
-    public List<Device> getDevicesByGreenhouse(UUID greenhouseId) {
+    public Device deleteDeviceInfo(@NotNull UUID deviceId) {
+        var device = tryFindDevice(deviceId);
+        deviceRepository.delete(device);
+        return device;
+    }
+
+    @Override
+    public List<Device> getDevicesByGreenhouse(@NotNull UUID greenhouseId) {
         var list = new ArrayList<Device>();
         deviceRepository.findByGreenhouse_Id(greenhouseId).forEach(list::add);
         return list;
+    }
+
+    private UUID getDeviceId(@NotNull Device device) {
+        return Objects.requireNonNull(device.getId());
+    }
+
+    private Device tryFindDevice(@NotNull UUID deviceId) {
+        var existing = deviceRepository.findById(deviceId);
+        if (!existing.isPresent()) {
+            throw new NotFoundException("Device not found");
+        }
+        return existing.get();
     }
 }
