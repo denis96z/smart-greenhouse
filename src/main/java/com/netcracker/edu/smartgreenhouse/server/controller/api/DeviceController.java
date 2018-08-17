@@ -1,4 +1,4 @@
-package com.netcracker.edu.smartgreenhouse.server.api;
+package com.netcracker.edu.smartgreenhouse.server.controller.api;
 
 import com.netcracker.edu.smartgreenhouse.server.domain.Device;
 import com.netcracker.edu.smartgreenhouse.server.exception.NotFoundException;

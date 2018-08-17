@@ -1,7 +1,6 @@
 package com.netcracker.edu.smartgreenhouse.server.controller.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netcracker.edu.smartgreenhouse.server.api.PersonController;
 import com.netcracker.edu.smartgreenhouse.server.domain.Person;
 import com.netcracker.edu.smartgreenhouse.server.exception.AlreadyExistsException;
 import com.netcracker.edu.smartgreenhouse.server.exception.NotFoundException;
