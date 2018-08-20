@@ -46,6 +46,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
     runtime("org.springframework.boot:spring-boot-devtools")
     runtime("org.postgresql:postgresql")
     testCompile("javax.xml.bind:jaxb-api")

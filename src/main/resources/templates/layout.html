@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,23 +9,42 @@
     <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css(family=Lobster)}">
 
     <link rel="stylesheet" th:href="@{/css/layout.css}">
+
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Task List</title>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="navbar-header">
-        <a class="navbar-brand" th:href="${(#mvc.url('IC#getIndexPage')).build()}">
-            <img th:src="@{/img/greenhouse.jpg}" class="d-inline-block align-top page-icon">
-            <span class="page-title">Smart Greenhouse</span>
-        </a>
-        <div class="navbar-right main-menu">
-            <ul class="navbar-nav">
-                <li><a th:href="${(#mvc.url('IC#getIndexPage')).build()}">Главная</a></li>
-                <li><a href="#">Регистрация</a></li>
-                <li><a href="#">Вход</a></li>
-            </ul>
+<div layout:fragment="header">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="${(#mvc.url('IC#getIndexPage')).build()}">
+                <img th:src="@{/img/greenhouse.jpg}" class="d-inline-block align-top page-icon">
+                <span class="page-title">Smart Greenhouse</span>
+            </a>
+            <div class="navbar-right main-menu">
+                <ul class="navbar-nav">
+                    <li><a th:href="${(#mvc.url('IC#getIndexPage')).build()}">Главная</a></li>
+                    <li><a href="#">Регистрация</a></li>
+                    <li><a href="#">Вход</a></li>
+                </ul>
+            </div>
         </div>
+    </nav>
+</div>
+
+<div class="container">
+    <div layout:fragment="content">
+        <h1>Заголовок</h1>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
+            Phasellus et placerat elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
+            Phasellus et placerat elit.
+        </p>
     </div>
-</nav>
+</div>
+
+<div layout:fragment="footer">&copy; 2018</div>
 
 <script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
