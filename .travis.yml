@@ -6,6 +6,7 @@ branches:
   only:
     - master
     - develop
+    - test
 
 sudo: required
 services:
@@ -27,3 +28,4 @@ before_script:
 
 script:
   - ./gradlew build
+  - ./gradlew test

@@ -1,6 +1,7 @@
 package com.netcracker.edu.smartgreenhouse.server.service;
 
 import com.netcracker.edu.smartgreenhouse.server.domain.Person;
+import com.netcracker.edu.smartgreenhouse.server.exception.AlreadyExistsException;
 import com.netcracker.edu.smartgreenhouse.server.exception.NotFoundException;
 import com.netcracker.edu.smartgreenhouse.server.repository.PersonRepository;
 import org.jetbrains.annotations.NotNull;
@@ -17,8 +18,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void addPersonInfo(Person person) {
-        personRepository.save(person);
+    public Person addPersonInfo(@NotNull Person person) {
+        var existing = personRepository.findById(person.getId());
+        if (existing.isPresent()) {
+            throw new AlreadyExistsException("Person already exists");
+        }
+        return personRepository.save(person);
     }
 
     @Override
@@ -31,21 +36,23 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void editPersonInfo(Person person) {
-        var newPerson = personRepository.findById(person.getId());
-        if (newPerson.isPresent()) {
+    public Person editPersonInfo(@NotNull Person person) {
+        var existing = personRepository.findById(person.getId());
+        if (existing.isPresent()) {
             personRepository.save(person);
+            return person;
         }
         throw new NotFoundException("Person not found");
     }
 
     @Override
-    public void deletePersonInfo(@NotNull Long personId) {
-        var person = personRepository.findById(personId);
-        if (person.isPresent()) {
-            personRepository.delete(person.get());
-        } else {
-            throw new NotFoundException("Person not found");
+    public Person deletePersonInfo(@NotNull Long personId) {
+        var existing = personRepository.findById(personId);
+        if (existing.isPresent()) {
+            var person = existing.get();
+            personRepository.delete(person);
+            return person;
         }
+        throw new NotFoundException("Person not found");
     }
 }
